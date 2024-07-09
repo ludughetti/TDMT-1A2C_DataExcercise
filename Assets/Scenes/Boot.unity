@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   selfGameController: {fileID: 11400000, guid: eb6e72f113ed8454ba09c0bf1c084871, type: 2}
+  sceneryController: {fileID: 11400000, guid: ff2b5654d0114d5409a07a5a85f8b92b, type: 2}
 --- !u!4 &322114493
 Transform:
   m_ObjectHideFlags: 0
@@ -323,9 +324,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!1 &1481394180
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1481394181}
+  - component: {fileID: 1481394182}
+  m_Layer: 0
+  m_Name: SceneryController
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1481394181
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481394180}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 350, y: 665, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1481394182
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1481394180}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 94bc3fb882daaa64f94268a5b0fde72f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfSceneryController: {fileID: 11400000, guid: ff2b5654d0114d5409a07a5a85f8b92b, type: 2}
+  levels:
+  - {fileID: 11400000, guid: bcc90a20281380b438b126e20b4b7448, type: 2}
+  - {fileID: 11400000, guid: cccb1dacf48b5cf4c81eb82e30500759, type: 2}
+  - {fileID: 11400000, guid: a4a9912704bee5049b751e1a70096e94, type: 2}
+  defaultLevel: Menus
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1111348744}
   - {fileID: 322114493}
+  - {fileID: 1481394181}

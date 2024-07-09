@@ -1487,14 +1487,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c2c08fce25d5547b385114ed26a7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameControllerDataSource: {fileID: 11400000, guid: eb6e72f113ed8454ba09c0bf1c084871, type: 2}
   menus:
   - {fileID: 11400000, guid: fdc1da63b6d9e32448b59bd0fdf7c16e, type: 2}
   - {fileID: 11400000, guid: ae189ced0b5032c48abaf6d29a5a1d8a, type: 2}
   - {fileID: 11400000, guid: e3ab4778144c67e4bafd585920178dc5, type: 2}
   defaultMenu: MainMenu
-  playMenu: Play
-  exitMenu: Quit
-  gameControllerDataSource: {fileID: 11400000, guid: eb6e72f113ed8454ba09c0bf1c084871, type: 2}
+  playMenu: Level1
+  exitMenu: Exit
 --- !u!1 &2018697421
 GameObject:
   m_ObjectHideFlags: 0

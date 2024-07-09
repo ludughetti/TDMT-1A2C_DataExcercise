@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9e8b89e3b53337439be8e22cc864a1c, type: 3}
   m_Name: OptionsMenu
   m_EditorClassIdentifier: 
-  _menuId: OptionsMenu
-  _menuLabel: Options
+  menuId: OptionsMenu
+  menuLabel: Options

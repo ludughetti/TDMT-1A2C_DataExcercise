@@ -21,7 +21,7 @@ namespace Navigation
         {
             SetupMenusById();
 
-            if (gameControllerDataSource != null && gameControllerDataSource.DataInstance != null)
+            if (gameControllerDataSource != null)
                 _gameController = gameControllerDataSource.DataInstance; 
         }
 
@@ -37,20 +37,36 @@ namespace Navigation
                 else
                     _currentMenuId = menu.MenuId;
 
+                Debug.Log($"MenuDataSource: id->{menu.MenuId}, label->{menu.MenuLabel}, isActive->{menu.DataInstance.gameObject.activeSelf}");
+
                 _menusById.TryAdd(menu.MenuId, menu);
             }
         }
 
         private void HandleMenuChange(string nextMenuId)
         {
+            MenuDataSource currentMenu;
+
             // Check if play or exit
             if (nextMenuId == playMenu)
-                _gameController.TriggerGameStart();
+            {
+                // Trigger Coroutine to load next level
+                _gameController.TriggerGameStart(nextMenuId);
+
+                // Turn off current menu so it's not displayed as the game loads up
+                _menusById.TryGetValue(_currentMenuId, out currentMenu);
+                currentMenu.DataInstance.gameObject.SetActive(false);
+
+                return;
+            }
             else if (nextMenuId == exitMenu)
-                _gameController.TriggerExitGame();
+            {
+                _gameController.TriggerExitGame(nextMenuId);
+                return;
+            }
 
             // Turn off current menu and turn on next menu only if both exist
-            if (_menusById.TryGetValue(_currentMenuId, out MenuDataSource currentMenu)
+            if (_menusById.TryGetValue(_currentMenuId, out currentMenu)
                 && _menusById.TryGetValue(nextMenuId, out MenuDataSource nextMenu))
             {
                 currentMenu.DataInstance.gameObject.SetActive(false);

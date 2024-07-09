@@ -15,6 +15,7 @@ namespace Navigation
 
         private void Awake()
         {
+            if (selfMenu != null)
             selfMenu.DataInstance = this;
         }
 

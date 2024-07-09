@@ -1,3 +1,4 @@
+using Scenery;
 using UnityEngine;
 
 namespace Gameplay 
@@ -5,6 +6,9 @@ namespace Gameplay
     public class GameController : MonoBehaviour
     {
         [SerializeField] private GameControllerDataSource selfGameController;
+        [SerializeField] private SceneryControllerDataSource sceneryController;
+
+        private SceneryController _sceneryController;
 
         private void Awake()
         {
@@ -12,16 +16,24 @@ namespace Gameplay
                 selfGameController.DataInstance = this;
         }
 
-        public void TriggerGameStart()
+        private void Start()
+        {
+            if (sceneryController != null)
+                _sceneryController = sceneryController.DataInstance;
+        }
+
+        public void TriggerGameStart(string startMenu)
         {
             // Call SceneryController and change level
             Debug.Log("Start game");
+            _sceneryController.TriggerChangeLevel(startMenu);
         }
 
-        public void TriggerExitGame()
+        public void TriggerExitGame(string exitMenu)
         {
             // Quit Game
             Debug.Log("Exit game");
+            _sceneryController.TriggerChangeLevel(exitMenu);
         }
     }
 }
