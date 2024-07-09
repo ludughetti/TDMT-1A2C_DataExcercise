@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Gameplay;
 using UnityEngine;
 
 namespace Navigation
@@ -6,18 +7,22 @@ namespace Navigation
     // This class handles each menu's creation and setup
     public class MenuController : MonoBehaviour
     {
+        [SerializeField] private GameControllerDataSource gameControllerDataSource;
         [SerializeField] private List<MenuDataSource> menus;
         [SerializeField] private string defaultMenu;
         [SerializeField] private string playMenu;
         [SerializeField] private string exitMenu;
-        //[SerializeField] private GameManagerDataSource gameManagerDataSource;
 
-        private Dictionary<string, MenuDataSource> _menusById;
+        private Dictionary<string, MenuDataSource> _menusById = new();
+        private GameController _gameController;
         string _currentMenuId;
 
         private void Start()
         {
             SetupMenusById();
+
+            if (gameControllerDataSource != null && gameControllerDataSource.DataInstance != null)
+                _gameController = gameControllerDataSource.DataInstance; 
         }
 
         private void SetupMenusById()
@@ -26,7 +31,11 @@ namespace Navigation
             {
                 menu.DataInstance.InitializeMenu();
                 menu.DataInstance.OnMenuChange += HandleMenuChange;
-                menu.DataInstance.gameObject.SetActive(false);
+
+                if(menu.MenuId != defaultMenu)
+                    menu.DataInstance.gameObject.SetActive(false);
+                else
+                    _currentMenuId = menu.MenuId;
 
                 _menusById.TryAdd(menu.MenuId, menu);
             }
@@ -34,8 +43,11 @@ namespace Navigation
 
         private void HandleMenuChange(string nextMenuId)
         {
-            // Check if play or exit, else turn on/off
-                // If play/exit -> call game manager
+            // Check if play or exit
+            if (nextMenuId == playMenu)
+                _gameController.TriggerGameStart();
+            else if (nextMenuId == exitMenu)
+                _gameController.TriggerExitGame();
 
             // Turn off current menu and turn on next menu only if both exist
             if (_menusById.TryGetValue(_currentMenuId, out MenuDataSource currentMenu)

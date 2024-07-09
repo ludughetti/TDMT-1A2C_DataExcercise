@@ -1,8 +1,10 @@
 {
-    "name": "Varela.DataExcercise.Gameplay.Runtime",
+    "name": "Varela.DataExcercise.Navigation",
     "rootNamespace": "",
     "references": [
-        "GUID:12fcdb1f4b3c0fa45bb802b9716f0dc0"
+        "GUID:6055be8ebefd69e48b49212b09b47b2f",
+        "GUID:0e7e41bd05ffb8b489198202f64c2b4f",
+        "GUID:59f885493a92eb64793a9a33130f8397"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

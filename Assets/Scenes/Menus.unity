@@ -241,9 +241,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'Made by: <Student name>
-
-    Subject: '
+  m_text: "Made by: Luciana Dughetti\nSubject: Programaci\xF3n con Motores I"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -332,13 +330,14 @@ GameObject:
   - component: {fileID: 276492855}
   - component: {fileID: 276492854}
   - component: {fileID: 276492853}
+  - component: {fileID: 276492856}
   m_Layer: 0
   m_Name: Credits
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &276492852
 RectTransform:
   m_ObjectHideFlags: 0
@@ -422,6 +421,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &276492856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 276492851}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa0e4b664a606d41b77b0f65146c960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfMenu: {fileID: 11400000, guid: e3ab4778144c67e4bafd585920178dc5, type: 2}
+  subMenus:
+  - {fileID: 11400000, guid: fdc1da63b6d9e32448b59bd0fdf7c16e, type: 2}
+  buttonPrefab: {fileID: -2343808572153997217, guid: 2032f625a2815334cb07fb2b9bb43054, type: 3}
+  buttons: {fileID: 638507308}
 --- !u!1 &388480087
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,11 +555,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selfMenu: {fileID: 11400000, guid: fdc1da63b6d9e32448b59bd0fdf7c16e, type: 2}
   subMenus:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  buttonPrefab: {fileID: 0}
+  - {fileID: 11400000, guid: f053799d53eb26f4597f47ba7bca19ad, type: 2}
+  - {fileID: 11400000, guid: ae189ced0b5032c48abaf6d29a5a1d8a, type: 2}
+  - {fileID: 11400000, guid: e3ab4778144c67e4bafd585920178dc5, type: 2}
+  - {fileID: 11400000, guid: 689792a6c43302149a4800ee9f78508d, type: 2}
+  buttonPrefab: {fileID: -2343808572153997217, guid: 2032f625a2815334cb07fb2b9bb43054, type: 3}
   buttons: {fileID: 930601871}
 --- !u!1 &638507307
 GameObject:
@@ -1316,13 +1332,14 @@ GameObject:
   - component: {fileID: 1462274428}
   - component: {fileID: 1462274427}
   - component: {fileID: 1462274426}
+  - component: {fileID: 1462274429}
   m_Layer: 0
   m_Name: Options
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1462274425
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1406,6 +1423,23 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1462274429
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1462274424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa0e4b664a606d41b77b0f65146c960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfMenu: {fileID: 11400000, guid: ae189ced0b5032c48abaf6d29a5a1d8a, type: 2}
+  subMenus:
+  - {fileID: 11400000, guid: fdc1da63b6d9e32448b59bd0fdf7c16e, type: 2}
+  buttonPrefab: {fileID: -2343808572153997217, guid: 2032f625a2815334cb07fb2b9bb43054, type: 3}
+  buttons: {fileID: 30434495}
 --- !u!1 &1491335514
 GameObject:
   m_ObjectHideFlags: 0
@@ -1453,10 +1487,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56c2c08fce25d5547b385114ed26a7fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  menus: []
-  defaultMenu: 
-  playMenu: 
-  exitMenu: 
+  menus:
+  - {fileID: 11400000, guid: fdc1da63b6d9e32448b59bd0fdf7c16e, type: 2}
+  - {fileID: 11400000, guid: ae189ced0b5032c48abaf6d29a5a1d8a, type: 2}
+  - {fileID: 11400000, guid: e3ab4778144c67e4bafd585920178dc5, type: 2}
+  defaultMenu: MainMenu
+  playMenu: Play
+  exitMenu: Quit
+  gameControllerDataSource: {fileID: 11400000, guid: eb6e72f113ed8454ba09c0bf1c084871, type: 2}
 --- !u!1 &2018697421
 GameObject:
   m_ObjectHideFlags: 0
