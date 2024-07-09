@@ -434,13 +434,14 @@ GameObject:
   - component: {fileID: 388480091}
   - component: {fileID: 388480090}
   - component: {fileID: 388480089}
+  - component: {fileID: 388480092}
   m_Layer: 0
   m_Name: MainMenu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &388480088
 RectTransform:
   m_ObjectHideFlags: 0
@@ -524,6 +525,26 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &388480092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388480087}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aaa0e4b664a606d41b77b0f65146c960, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  selfMenu: {fileID: 11400000, guid: fdc1da63b6d9e32448b59bd0fdf7c16e, type: 2}
+  subMenus:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  buttonPrefab: {fileID: 0}
+  buttons: {fileID: 930601871}
 --- !u!1 &638507307
 GameObject:
   m_ObjectHideFlags: 0
@@ -1394,6 +1415,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1491335515}
+  - component: {fileID: 1491335516}
   m_Layer: 0
   m_Name: Navigation
   m_TagString: Untagged
@@ -1419,6 +1441,22 @@ Transform:
   - {fileID: 276492852}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1491335516
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491335514}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56c2c08fce25d5547b385114ed26a7fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  menus: []
+  defaultMenu: 
+  playMenu: 
+  exitMenu: 
 --- !u!1 &2018697421
 GameObject:
   m_ObjectHideFlags: 0
