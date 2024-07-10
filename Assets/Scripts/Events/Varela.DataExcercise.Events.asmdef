@@ -1,9 +1,8 @@
 {
-    "name": "Varela.DataExcercise.Characters.Runtime",
+    "name": "Varela.DataExcercise.Events",
     "rootNamespace": "",
     "references": [
-        "GUID:6a581ca88f27cc8428c332a4ede4eeaf",
-        "GUID:88273fb8d2cfc11489bd664c25c63aef"
+        "GUID:12f6932d7aa2c6f4aa6711fd7376dece"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

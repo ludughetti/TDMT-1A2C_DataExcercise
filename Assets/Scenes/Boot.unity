@@ -153,6 +153,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   selfGameController: {fileID: 11400000, guid: eb6e72f113ed8454ba09c0bf1c084871, type: 2}
   sceneryController: {fileID: 11400000, guid: ff2b5654d0114d5409a07a5a85f8b92b, type: 2}
+  levelEventChannel: {fileID: 11400000, guid: 19a5976f049a3de43b64f8a1ee4ed081, type: 2}
+  endgameEventChannel: {fileID: 11400000, guid: 653a58f75b3c7e84c96ead1268bf51cf, type: 2}
 --- !u!4 &322114493
 Transform:
   m_ObjectHideFlags: 0

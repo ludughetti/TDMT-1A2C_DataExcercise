@@ -269,6 +269,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2
   runningSpeed: 2
+  endgameEventChannel: {fileID: 11400000, guid: 653a58f75b3c7e84c96ead1268bf51cf, type: 2}
 --- !u!114 &1068601458
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -281,6 +282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5b6628c20b7a498f0e1095a455512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelEventChannel: {fileID: 11400000, guid: 19a5976f049a3de43b64f8a1ee4ed081, type: 2}
+  targetSource: {fileID: 11400000, guid: 05a6ba4d938d9fa408051b59fc0c7288, type: 2}
   attackDistance: 3
 --- !u!135 &1068601459
 SphereCollider:
@@ -1807,6 +1810,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelStart: {fileID: 1517859829}
+  playerControllerSource: {fileID: 11400000, guid: 945f19c9677748a419e44cdb1b7c803a, type: 2}
 --- !u!4 &1420981759
 Transform:
   m_ObjectHideFlags: 0
@@ -1999,6 +2003,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: LevelEnd
       objectReference: {fileID: 0}
+    - target: {fileID: 8671151960176144338, guid: 6e1b7e3c385f49f4ca029d6f1e4237ab, type: 3}
+      propertyPath: nextLevel
+      value: 
+      objectReference: {fileID: 11400000, guid: 529bf1e4131327240949d6d563db8244, type: 2}
+    - target: {fileID: 8671151960176144338, guid: 6e1b7e3c385f49f4ca029d6f1e4237ab, type: 3}
+      propertyPath: levelEventChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: 19a5976f049a3de43b64f8a1ee4ed081, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

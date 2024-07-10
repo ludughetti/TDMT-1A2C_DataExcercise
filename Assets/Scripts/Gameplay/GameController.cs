@@ -1,3 +1,4 @@
+using Events;
 using Scenery;
 using UnityEngine;
 
@@ -7,13 +8,34 @@ namespace Gameplay
     {
         [SerializeField] private GameControllerDataSource selfGameController;
         [SerializeField] private SceneryControllerDataSource sceneryController;
+        [SerializeField] private StringEventChannel levelEventChannel;
+        [SerializeField] private BoolEventChannel endgameEventChannel;
+        [SerializeField] private Level endgameLevel;
 
         private SceneryController _sceneryController;
 
         private void Awake()
         {
-            if(selfGameController != null)
+            if (selfGameController != null)
                 selfGameController.DataInstance = this;
+        }
+
+        private void OnEnable()
+        {
+            if (levelEventChannel != null)
+                levelEventChannel.Subscribe(TriggerNextLevel);
+
+            if (endgameEventChannel != null)
+                endgameEventChannel.Subscribe(TriggerEndgame);
+        }
+
+        private void OnDisable()
+        {
+            if (levelEventChannel != null)
+                levelEventChannel.Unsubscribe(TriggerNextLevel);
+
+            if (endgameEventChannel != null)
+                endgameEventChannel.Unsubscribe(TriggerEndgame);
         }
 
         private void Start()
@@ -22,18 +44,25 @@ namespace Gameplay
                 _sceneryController = sceneryController.DataInstance;
         }
 
-        public void TriggerGameStart(string startMenu)
+        public void TriggerNextLevel(string nextLevel)
         {
+            // If it's endgame, invoke event
+            if(endgameLevel != null && endgameLevel.LevelName == nextLevel
+                && endgameEventChannel != null)
+            {
+                endgameEventChannel.Invoke(true);
+                return;
+            }
+
             // Call SceneryController and change level
-            Debug.Log("Start game");
-            _sceneryController.TriggerChangeLevel(startMenu);
+            Debug.Log($"{name}: change level request received, loading next level ({nextLevel})");
+            if (_sceneryController != null)
+                _sceneryController.TriggerChangeLevel(nextLevel);
         }
 
-        public void TriggerExitGame(string exitMenu)
+        private void TriggerEndgame(bool isVictory)
         {
-            // Quit Game
-            Debug.Log("Exit game");
-            _sceneryController.TriggerChangeLevel(exitMenu);
+            Debug.Log($"isVictory: {isVictory}");
         }
     }
 }

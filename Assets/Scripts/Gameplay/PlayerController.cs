@@ -1,4 +1,6 @@
 using Characters;
+using Core.Interactions;
+using Events;
 using UnityEngine;
 
 namespace Gameplay
@@ -6,6 +8,11 @@ namespace Gameplay
     [RequireComponent(typeof(Character))]
     public class PlayerController : MonoBehaviour
     {
+        [SerializeField] private PlayerControllerDataSource playerControllerSource;
+        [SerializeField] private ITargetDataSource targetSource;
+        [SerializeField] private Vector2EventChannel moveEventChannel;
+        [SerializeField] private BoolEventChannel runEventChannel;
+
         private Character _character;
 
         private void Reset()
@@ -20,18 +27,39 @@ namespace Gameplay
             {
                 _character.enabled = false;
             }
+
+            if(targetSource != null && _character != null)
+            {
+                targetSource.DataInstance = _character.GetComponent<ITarget>();
+            }
         }
 
         private void OnEnable()
         {
-            //TODO: Subscribe to inputs via event manager/event channel
-            //TODO: Set itself as player reference via ReferenceManager/DataSource
+            //TODO: [Done] Subscribe to inputs via event manager/event channel
+            if (moveEventChannel != null)
+                moveEventChannel.Subscribe(HandleMove);
+
+            if (runEventChannel != null)
+                runEventChannel.Subscribe(HandleRun);
+
+            //TODO: [Done] Set itself as player reference via ReferenceManager/DataSource
+            if (playerControllerSource != null)
+                playerControllerSource.DataInstance = this;
         }
 
         private void OnDisable()
         {
-            //TODO: Unsubscribe from all inputs via event manager/event channel
-            //TODO: Remove itself as player reference via reference manager/dataSource
+            //TODO: [Done] Unsubscribe from all inputs via event manager/event channel
+            if (moveEventChannel != null)
+                moveEventChannel.Unsubscribe(HandleMove);
+
+            if (runEventChannel != null)
+                runEventChannel.Unsubscribe(HandleRun);
+
+            //TODO: [Done] Remove itself as player reference via reference manager/dataSource
+            if (playerControllerSource != null)
+                playerControllerSource.DataInstance = null;
         }
 
         public void SetPlayerAtLevelStartAndEnable(Vector3 levelStartPosition)

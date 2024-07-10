@@ -11,6 +11,8 @@ namespace Scenery
         [SerializeField] private List<Level> levels;
         [SerializeField] private string defaultLevel;
 
+        private bool _isEndgame = false;
+        private bool _isVictory = false;
         private Dictionary<string, Level> _levelsByName = new();
         private string _currentLevelName;
 
@@ -32,6 +34,16 @@ namespace Scenery
             TriggerChangeLevel(_currentLevelName);
         }
 
+        private void OnEnable()
+        {
+            
+        }
+
+        private void OnDisable()
+        {
+            
+        }
+
         public void TriggerChangeLevel(string nextLevelName)
         {
             Debug.Log($"{name}: Triggering ChangeLevel from {_currentLevelName} to {nextLevelName}.");
@@ -42,6 +54,25 @@ namespace Scenery
                 StartCoroutine(ChangeLevel(currentLevel, nextLevel));
             else
                 Debug.Log($"{name}: Scenes {_currentLevelName} or {nextLevelName} were not found in the scenes dictionary.");
+        }
+
+        public void TriggerEndgame(bool isVictory)
+        {
+            _isEndgame = true;
+            _isVictory = isVictory;
+
+            StartCoroutine(HandleEndgame(isVictory));
+        }
+
+        private IEnumerator HandleEndgame(bool isVictory)
+        {
+            // Unload what we don't need
+            Level currentLevel = _levelsByName[_currentLevelName];
+            yield return Unload(currentLevel);
+
+            _currentLevelName = defaultLevel;
+
+            // Make Menu show endgame screen
         }
 
         private IEnumerator ChangeLevel(Level currentLevel, Level nextLevel)

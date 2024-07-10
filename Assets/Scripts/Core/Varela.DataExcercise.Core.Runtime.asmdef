@@ -1,7 +1,9 @@
 {
     "name": "Varela.DataExcercise.Core.Runtime",
     "rootNamespace": "",
-    "references": [],
+    "references": [
+        "GUID:0e7e41bd05ffb8b489198202f64c2b4f"
+    ],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,

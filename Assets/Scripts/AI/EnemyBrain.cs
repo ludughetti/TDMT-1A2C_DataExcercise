@@ -1,12 +1,15 @@
-using System;
 using Core.Interactions;
+using Events;
 using UnityEngine;
 
 namespace AI
 {
     public class EnemyBrain : MonoBehaviour
     {
+        [SerializeField] private StringEventChannel levelEventChannel;
+        [SerializeField] private ITargetDataSource targetSource;
         [SerializeField] private float attackDistance;
+
         private ITarget _target;
         private ISteerable _steerable;
 
@@ -18,11 +21,26 @@ namespace AI
                 Debug.LogError($"{name}: cannot find a {nameof(ISteerable)} component!");
                 enabled = false;
             }
+
+            if (targetSource != null)
+                _target = targetSource.DataInstance;
+        }
+
+        private void OnEnable()
+        {
+            if (levelEventChannel != null)
+                levelEventChannel.Subscribe(DisableTargetOnLevelEnd);
+        }
+
+        private void OnDisable()
+        {
+            if (levelEventChannel != null)
+                levelEventChannel.Unsubscribe(DisableTargetOnLevelEnd);
         }
 
         private void Update()
         {
-            //TODO: Add logic to get the target from a source/reference system
+            //TODO: [Done] Add logic to get the target from a source/reference system
             if (_target == null)
                 return;
             //          AB        =         B        -          A
@@ -43,6 +61,12 @@ namespace AI
         {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(transform.position, attackDistance);
+        }
+
+        private void DisableTargetOnLevelEnd(string nextLevel)
+        {
+            Debug.Log($"{name}: Disabling EnemyBrain on level end");
+            gameObject.SetActive(false);
         }
     }
 }

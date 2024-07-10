@@ -1,3 +1,4 @@
+using Events;
 using UnityEngine;
 using Core.Interactions;
 
@@ -7,6 +8,8 @@ namespace Characters
     {
         [SerializeField] private float speed = 2.5f;
         [SerializeField] private float runningSpeed = 5;
+        [SerializeField] private BoolEventChannel endgameEventChannel;
+
         private Vector3 _currentDirection = Vector3.zero;
         private bool _isRunning = false;
 
@@ -27,8 +30,10 @@ namespace Characters
 
         public void ReceiveAttack()
         {
-            //TODO: Raise event through event system telling the game to show the defeat sequence.
+            //TODO: [Done] Raise event through event system telling the game to show the defeat sequence.
             Debug.Log($"{name}: received an attack!");
+            if (endgameEventChannel != null)
+                endgameEventChannel.Invoke(false);
         }
     }
 }

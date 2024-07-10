@@ -338,6 +338,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 2.5
   runningSpeed: 5
+  endgameEventChannel: {fileID: 11400000, guid: 653a58f75b3c7e84c96ead1268bf51cf, type: 2}
 --- !u!114 &2118192445
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -350,6 +351,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 814db5634369287469330bdc93c932ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerControllerSource: {fileID: 11400000, guid: 945f19c9677748a419e44cdb1b7c803a, type: 2}
+  targetSource: {fileID: 11400000, guid: 05a6ba4d938d9fa408051b59fc0c7288, type: 2}
+  moveEventChannel: {fileID: 11400000, guid: fe7c5cfd9f4aabc46b1eedf88b474e9e, type: 2}
+  runEventChannel: {fileID: 11400000, guid: 5d0ce707a6811c241ae76441d6dcdb04, type: 2}
 --- !u!54 &2118192446
 Rigidbody:
   m_ObjectHideFlags: 0

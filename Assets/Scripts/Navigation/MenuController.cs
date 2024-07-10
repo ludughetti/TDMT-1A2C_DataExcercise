@@ -15,7 +15,7 @@ namespace Navigation
 
         private Dictionary<string, MenuDataSource> _menusById = new();
         private GameController _gameController;
-        string _currentMenuId;
+        private string _currentMenuId;
 
         private void Start()
         {
@@ -51,7 +51,7 @@ namespace Navigation
             if (nextMenuId == playMenu)
             {
                 // Trigger Coroutine to load next level
-                _gameController.TriggerGameStart(nextMenuId);
+                _gameController.TriggerNextLevel(nextMenuId);
 
                 // Turn off current menu so it's not displayed as the game loads up
                 _menusById.TryGetValue(_currentMenuId, out currentMenu);
@@ -61,7 +61,7 @@ namespace Navigation
             }
             else if (nextMenuId == exitMenu)
             {
-                _gameController.TriggerExitGame(nextMenuId);
+                _gameController.TriggerNextLevel(nextMenuId);
                 return;
             }
 
