@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Events;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -9,10 +10,9 @@ namespace Scenery
     {
         [SerializeField] private SceneryControllerDataSource selfSceneryController;
         [SerializeField] private List<Level> levels;
-        [SerializeField] private string defaultLevel;
+        [SerializeField] private Level defaultLevel;
+        [SerializeField] private BoolEventChannel endgameEventChannel;
 
-        private bool _isEndgame = false;
-        private bool _isVictory = false;
         private Dictionary<string, Level> _levelsByName = new();
         private string _currentLevelName;
 
@@ -25,7 +25,7 @@ namespace Scenery
             {
                 _levelsByName.TryAdd(level.LevelName, level);
 
-                if (level.LevelName == defaultLevel)
+                if (level.LevelName == defaultLevel.LevelName)
                     _currentLevelName = level.LevelName;
 
                 Debug.Log($"{name}: Scene {level.LevelName} was saved in the scenes dictionary.");
@@ -36,12 +36,14 @@ namespace Scenery
 
         private void OnEnable()
         {
-            
+            if (endgameEventChannel != null)
+                endgameEventChannel.Subscribe(TriggerEndgame);
         }
 
         private void OnDisable()
         {
-            
+            if (endgameEventChannel != null)
+                endgameEventChannel.Unsubscribe(TriggerEndgame);
         }
 
         public void TriggerChangeLevel(string nextLevelName)
@@ -56,11 +58,8 @@ namespace Scenery
                 Debug.Log($"{name}: Scenes {_currentLevelName} or {nextLevelName} were not found in the scenes dictionary.");
         }
 
-        public void TriggerEndgame(bool isVictory)
+        private void TriggerEndgame(bool isVictory)
         {
-            _isEndgame = true;
-            _isVictory = isVictory;
-
             StartCoroutine(HandleEndgame(isVictory));
         }
 
@@ -70,9 +69,7 @@ namespace Scenery
             Level currentLevel = _levelsByName[_currentLevelName];
             yield return Unload(currentLevel);
 
-            _currentLevelName = defaultLevel;
-
-            // Make Menu show endgame screen
+            _currentLevelName = defaultLevel.LevelName;
         }
 
         private IEnumerator ChangeLevel(Level currentLevel, Level nextLevel)

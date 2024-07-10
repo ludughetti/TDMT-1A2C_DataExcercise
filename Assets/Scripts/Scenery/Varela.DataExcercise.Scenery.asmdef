@@ -2,7 +2,8 @@
     "name": "Varela.DataExcercise.Scenery",
     "rootNamespace": "",
     "references": [
-        "GUID:0e7e41bd05ffb8b489198202f64c2b4f"
+        "GUID:0e7e41bd05ffb8b489198202f64c2b4f",
+        "GUID:88273fb8d2cfc11489bd664c25c63aef"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

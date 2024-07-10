@@ -6,7 +6,7 @@ namespace AI
 {
     public class EnemyBrain : MonoBehaviour
     {
-        [SerializeField] private StringEventChannel levelEventChannel;
+        [SerializeField] private BoolEventChannel endgameEventChannel;
         [SerializeField] private ITargetDataSource targetSource;
         [SerializeField] private float attackDistance;
 
@@ -28,14 +28,14 @@ namespace AI
 
         private void OnEnable()
         {
-            if (levelEventChannel != null)
-                levelEventChannel.Subscribe(DisableTargetOnLevelEnd);
+            if (endgameEventChannel != null)
+                endgameEventChannel.Subscribe(DisableTargetOnLevelEnd);
         }
 
         private void OnDisable()
         {
-            if (levelEventChannel != null)
-                levelEventChannel.Unsubscribe(DisableTargetOnLevelEnd);
+            if (endgameEventChannel != null)
+                endgameEventChannel.Unsubscribe(DisableTargetOnLevelEnd);
         }
 
         private void Update()
@@ -63,7 +63,7 @@ namespace AI
             Gizmos.DrawWireSphere(transform.position, attackDistance);
         }
 
-        private void DisableTargetOnLevelEnd(string nextLevel)
+        private void DisableTargetOnLevelEnd(bool isVictory)
         {
             Debug.Log($"{name}: Disabling EnemyBrain on level end");
             gameObject.SetActive(false);

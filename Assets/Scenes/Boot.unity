@@ -154,6 +154,7 @@ MonoBehaviour:
   selfGameController: {fileID: 11400000, guid: eb6e72f113ed8454ba09c0bf1c084871, type: 2}
   sceneryController: {fileID: 11400000, guid: ff2b5654d0114d5409a07a5a85f8b92b, type: 2}
   levelEventChannel: {fileID: 11400000, guid: 19a5976f049a3de43b64f8a1ee4ed081, type: 2}
+  endgameLevel: {fileID: 11400000, guid: 529bf1e4131327240949d6d563db8244, type: 2}
   endgameEventChannel: {fileID: 11400000, guid: 653a58f75b3c7e84c96ead1268bf51cf, type: 2}
 --- !u!4 &322114493
 Transform:
@@ -375,7 +376,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bcc90a20281380b438b126e20b4b7448, type: 2}
   - {fileID: 11400000, guid: cccb1dacf48b5cf4c81eb82e30500759, type: 2}
   - {fileID: 11400000, guid: a4a9912704bee5049b751e1a70096e94, type: 2}
-  defaultLevel: Menus
+  defaultLevel: {fileID: 11400000, guid: bcc90a20281380b438b126e20b4b7448, type: 2}
+  endgameEventChannel: {fileID: 11400000, guid: 653a58f75b3c7e84c96ead1268bf51cf, type: 2}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

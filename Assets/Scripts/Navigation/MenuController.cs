@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Events;
 using Gameplay;
 using UnityEngine;
 
@@ -9,13 +10,28 @@ namespace Navigation
     {
         [SerializeField] private GameControllerDataSource gameControllerDataSource;
         [SerializeField] private List<MenuDataSource> menus;
-        [SerializeField] private string defaultMenu;
-        [SerializeField] private string playMenu;
-        [SerializeField] private string exitMenu;
+        [SerializeField] private MenuDataSource defaultMenu;
+        [SerializeField] private MenuDataSource playMenu;
+        [SerializeField] private MenuDataSource exitMenu;
+        [SerializeField] private BoolEventChannel endgameEventChannel;
+        [SerializeField] private MenuDataSource endgameMenu;
+        [SerializeField] private EndgameResultDataSource endgameResultDataSource;
 
         private Dictionary<string, MenuDataSource> _menusById = new();
         private GameController _gameController;
         private string _currentMenuId;
+
+        private void OnEnable()
+        {
+            if (endgameEventChannel != null)
+                endgameEventChannel.Subscribe(HandleEndgameMenu);
+        }
+
+        private void OnDisable()
+        {
+            if (endgameEventChannel != null)
+                endgameEventChannel.Unsubscribe(HandleEndgameMenu);
+        }
 
         private void Start()
         {
@@ -23,16 +39,18 @@ namespace Navigation
 
             if (gameControllerDataSource != null)
                 _gameController = gameControllerDataSource.DataInstance; 
+
+            if(endgameMenu != null)
+                endgameMenu.DataInstance.gameObject.SetActive(false);
         }
 
         private void SetupMenusById()
         {
             foreach (MenuDataSource menu in menus)
             {
-                menu.DataInstance.InitializeMenu();
                 menu.DataInstance.OnMenuChange += HandleMenuChange;
 
-                if(menu.MenuId != defaultMenu)
+                if(menu.MenuId != defaultMenu.MenuId)
                     menu.DataInstance.gameObject.SetActive(false);
                 else
                     _currentMenuId = menu.MenuId;
@@ -48,7 +66,7 @@ namespace Navigation
             MenuDataSource currentMenu;
 
             // Check if play or exit
-            if (nextMenuId == playMenu)
+            if (nextMenuId == playMenu.MenuId)
             {
                 // Trigger Coroutine to load next level
                 _gameController.TriggerNextLevel(nextMenuId);
@@ -59,9 +77,9 @@ namespace Navigation
 
                 return;
             }
-            else if (nextMenuId == exitMenu)
+            else if (nextMenuId == exitMenu.MenuId)
             {
-                _gameController.TriggerNextLevel(nextMenuId);
+                _gameController.QuitGame();
                 return;
             }
 
@@ -69,7 +87,7 @@ namespace Navigation
             if (_menusById.TryGetValue(_currentMenuId, out currentMenu)
                 && _menusById.TryGetValue(nextMenuId, out MenuDataSource nextMenu))
             {
-                currentMenu.DataInstance.gameObject.SetActive(false);
+                //currentMenu.DataInstance.gameObject.SetActive(false);
                 nextMenu.DataInstance.gameObject.SetActive(true);
 
                 _currentMenuId = nextMenuId;
@@ -77,6 +95,14 @@ namespace Navigation
             {
                 Debug.Log($"{name}: Menus {_currentMenuId} or {nextMenuId} were not found in the menu dictionary.");
             }
+        }
+
+        private void HandleEndgameMenu(bool isVictory)
+        {
+            Debug.Log($"MenuDataSource: id->{endgameMenu.MenuId}, label->{endgameMenu.MenuLabel}, isActive->{endgameMenu.DataInstance.gameObject.activeSelf}");
+            endgameMenu.DataInstance.gameObject.SetActive(true);
+            endgameMenu.DataInstance.OnMenuChange += HandleMenuChange;
+            endgameResultDataSource.DataInstance.HandleEndgameResult(isVictory);
         }
     }
 }

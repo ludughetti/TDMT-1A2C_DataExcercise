@@ -9,8 +9,8 @@ namespace Gameplay
         [SerializeField] private GameControllerDataSource selfGameController;
         [SerializeField] private SceneryControllerDataSource sceneryController;
         [SerializeField] private StringEventChannel levelEventChannel;
-        [SerializeField] private BoolEventChannel endgameEventChannel;
         [SerializeField] private Level endgameLevel;
+        [SerializeField] private BoolEventChannel endgameEventChannel;
 
         private SceneryController _sceneryController;
 
@@ -24,18 +24,12 @@ namespace Gameplay
         {
             if (levelEventChannel != null)
                 levelEventChannel.Subscribe(TriggerNextLevel);
-
-            if (endgameEventChannel != null)
-                endgameEventChannel.Subscribe(TriggerEndgame);
         }
 
         private void OnDisable()
         {
             if (levelEventChannel != null)
                 levelEventChannel.Unsubscribe(TriggerNextLevel);
-
-            if (endgameEventChannel != null)
-                endgameEventChannel.Unsubscribe(TriggerEndgame);
         }
 
         private void Start()
@@ -46,23 +40,28 @@ namespace Gameplay
 
         public void TriggerNextLevel(string nextLevel)
         {
-            // If it's endgame, invoke event
-            if(endgameLevel != null && endgameLevel.LevelName == nextLevel
-                && endgameEventChannel != null)
+            // Call SceneryController to change level
+            Debug.Log($"{name}: change level request received, loading next level ({nextLevel})");
+
+            // If it's endgame and everything's set up, trigger endgame. 
+            if (_sceneryController != null && endgameLevel.LevelName == nextLevel
+                    && endgameEventChannel != null)
             {
                 endgameEventChannel.Invoke(true);
                 return;
             }
 
-            // Call SceneryController and change level
-            Debug.Log($"{name}: change level request received, loading next level ({nextLevel})");
+            // Else, change level.
             if (_sceneryController != null)
                 _sceneryController.TriggerChangeLevel(nextLevel);
         }
 
-        private void TriggerEndgame(bool isVictory)
+        public void QuitGame()
         {
-            Debug.Log($"isVictory: {isVictory}");
+#if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+#endif
+            Application.Quit();
         }
     }
 }

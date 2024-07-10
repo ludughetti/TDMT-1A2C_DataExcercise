@@ -16,7 +16,18 @@ namespace Navigation
         private void Awake()
         {
             if (selfMenu != null)
-            selfMenu.DataInstance = this;
+                selfMenu.DataInstance = this;
+        }
+
+        private void OnEnable()
+        {
+            InitializeMenu();
+        }
+
+        private void OnDisable()
+        {
+            foreach (Transform button in buttons)
+                Destroy(button.gameObject);
         }
 
         public void InitializeMenu()
@@ -32,6 +43,7 @@ namespace Navigation
 
         private void HandleButtonClick(string id)
         {
+            selfMenu.DataInstance.gameObject.SetActive(false);
             OnMenuChange?.Invoke(id);
         }
     }

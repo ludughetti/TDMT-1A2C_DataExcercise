@@ -282,7 +282,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ac5b6628c20b7a498f0e1095a455512, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelEventChannel: {fileID: 11400000, guid: 19a5976f049a3de43b64f8a1ee4ed081, type: 2}
+  endgameEventChannel: {fileID: 11400000, guid: 653a58f75b3c7e84c96ead1268bf51cf, type: 2}
   targetSource: {fileID: 11400000, guid: 05a6ba4d938d9fa408051b59fc0c7288, type: 2}
   attackDistance: 3
 --- !u!135 &1068601459
