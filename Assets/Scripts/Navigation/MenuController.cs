@@ -50,10 +50,15 @@ namespace Navigation
             {
                 menu.DataInstance.OnMenuChange += HandleMenuChange;
 
-                if(menu.MenuId != defaultMenu.MenuId)
-                    menu.DataInstance.gameObject.SetActive(false);
-                else
+                if(menu.MenuId == defaultMenu.MenuId)
+                {
+                    menu.DataInstance.gameObject.SetActive(true);
                     _currentMenuId = menu.MenuId;
+                }
+                else
+                {
+                    menu.DataInstance.gameObject.SetActive(false);
+                }
 
                 Debug.Log($"MenuDataSource: id->{menu.MenuId}, label->{menu.MenuLabel}, isActive->{menu.DataInstance.gameObject.activeSelf}");
 
@@ -87,7 +92,9 @@ namespace Navigation
             if (_menusById.TryGetValue(_currentMenuId, out currentMenu)
                 && _menusById.TryGetValue(nextMenuId, out MenuDataSource nextMenu))
             {
-                //currentMenu.DataInstance.gameObject.SetActive(false);
+                Debug.Log($"{name}: Menus handling {_currentMenuId}, {nextMenuId}");
+
+                currentMenu.DataInstance.gameObject.SetActive(false);
                 nextMenu.DataInstance.gameObject.SetActive(true);
 
                 _currentMenuId = nextMenuId;
@@ -99,7 +106,7 @@ namespace Navigation
 
         private void HandleEndgameMenu(bool isVictory)
         {
-            Debug.Log($"MenuDataSource: id->{endgameMenu.MenuId}, label->{endgameMenu.MenuLabel}, isActive->{endgameMenu.DataInstance.gameObject.activeSelf}");
+            Debug.Log($"EndgameDataSource: id->{endgameMenu.MenuId}, label->{endgameMenu.MenuLabel}, isActive->{endgameMenu.DataInstance.gameObject.activeSelf}");
             endgameMenu.DataInstance.gameObject.SetActive(true);
             endgameMenu.DataInstance.OnMenuChange += HandleMenuChange;
             endgameResultDataSource.DataInstance.HandleEndgameResult(isVictory);

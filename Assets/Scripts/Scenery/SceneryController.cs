@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Events;
@@ -13,7 +14,11 @@ namespace Scenery
         [SerializeField] private Level defaultLevel;
         [SerializeField] private BoolEventChannel endgameEventChannel;
 
+        public event Action<bool> OnLoadingScreenToggle = delegate { };
+        public event Action<float> OnLoadingUpdate = delegate { };
+
         private Dictionary<string, Level> _levelsByName = new();
+        private int _scenesProcessedCount = 0;
         private string _currentLevelName;
 
         private void Awake()
@@ -60,36 +65,69 @@ namespace Scenery
 
         private void TriggerEndgame(bool isVictory)
         {
-            StartCoroutine(HandleEndgame(isVictory));
+            StartCoroutine(HandleEndgame());
         }
 
-        private IEnumerator HandleEndgame(bool isVictory)
+        private IEnumerator HandleEndgame()
         {
             // Unload what we don't need
             Level currentLevel = _levelsByName[_currentLevelName];
-            yield return Unload(currentLevel);
+
+            int totalScenesCount = 0;
+            foreach (Scene scene in currentLevel.Scenes)
+            {
+                if (scene.IsUnloadable)
+                    totalScenesCount++;
+            }
+
+            yield return Unload(currentLevel, totalScenesCount);
 
             _currentLevelName = defaultLevel.LevelName;
+            _scenesProcessedCount = 0;
         }
 
         private IEnumerator ChangeLevel(Level currentLevel, Level nextLevel)
         {
-            yield return Unload(currentLevel);
+            // Show Loading screen
+            OnLoadingScreenToggle.Invoke(true);
 
-            yield return Load(nextLevel);
+            // Count scenes to unload/load to display the correct loading percentage
+            int totalScenesCount = 0;
+            foreach (Scene scene in currentLevel.Scenes)
+            {
+                if (scene.IsUnloadable)
+                    totalScenesCount++;
+            }
+
+            totalScenesCount += nextLevel.Scenes.Count;
+
+            yield return Unload(currentLevel, totalScenesCount);
+
+            yield return Load(nextLevel, totalScenesCount);
+
+            // Hide Loading screen
+            OnLoadingScreenToggle.Invoke(false);
+
             _currentLevelName = nextLevel.LevelName;
+            _scenesProcessedCount = 0;
         }
 
-        private IEnumerator Load(Level level)
+        private IEnumerator Load(Level level, float totalScenes)
         {
             foreach(Scene scene in level.Scenes)
             {
                 AsyncOperation loadOperation = SceneManager.LoadSceneAsync(scene.SceneId, LoadSceneMode.Additive);
                 yield return new WaitUntil(() => loadOperation.isDone);
+                _scenesProcessedCount++;
+
+                OnLoadingUpdate.Invoke(_scenesProcessedCount / totalScenes);
+                
+                // Fake wait so the loading UI doesn't disappear instantly
+                yield return new WaitForSeconds(1);
             }
         }
 
-        private IEnumerator Unload(Level level)
+        private IEnumerator Unload(Level level, float totalScenes)
         {
             foreach(Scene scene in level.Scenes)
             {
@@ -100,6 +138,12 @@ namespace Scenery
 
                 if(unloadOperation != null)
                     yield return new WaitUntil(() => unloadOperation.isDone);
+                _scenesProcessedCount++;
+
+                OnLoadingUpdate.Invoke(_scenesProcessedCount / totalScenes);
+
+                // Fake wait so the loading UI doesn't disappear instantly
+                yield return new WaitForSeconds(1);
             }
         }
 
